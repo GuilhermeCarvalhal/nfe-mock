@@ -1,0 +1,8 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+www.nfe.fazenda.gov.br	TRUE	/	FALSE	1999999999	AspxAutoDetectCookieSupport	1
+www.nfe.fazenda.gov.br	TRUE	/	FALSE	1999999999	ASP.NET_SessionId	ulrtkhz5xb42htsfqfcybakw
+www.nfe.fazenda.gov.br	TRUE	/	FALSE	1999999999	SameSite	Lax
+.hcaptcha.com	TRUE	/	FALSE	1999999999	__cf_bm	zd_ELnk1HyPNggyAR3nN6eXXRPAdr.LB3mxmaaFQI1g-1763839383-1.0.1.1-xQIJNR6nKB2Z4N61VkMa5CbGJRq9ujGb54KM6FzKqE6kYqOjvpOCzpvgOhkF35tsXgri4.dLk0y5zVbtMDZJpoph8nWva_qHc4RPMrZloJ0
+hcaptcha.com	TRUE	/	FALSE	1999999999	SameSite	None
+
