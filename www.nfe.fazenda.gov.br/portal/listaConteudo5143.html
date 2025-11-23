@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -30,11 +29,162 @@
     });
     </script>
 
+<style>
+    #menuAcessibilidade {
+        /* 1. POSICIONAMENTO (A chave para liberar a logo) */
+        float: right !important; /* Joga a barra para a direita */
+        width: auto !important;  /* A barra encolhe para caber o texto */
+        position: relative !important; /* Garante que o z-index funcione */
+        top: 0 !important;
+        left: auto !important;
+        margin: 0 !important;
+        
+        /* 2. SIMETRIA (O perfeccionismo visual) */
+        padding: 0 20px !important; /* 20px de borda exata em cada lado */
+        
+        /* 3. VISUAL E ALINHAMENTO */
+        height: 28px !important;
+        background-color: #d97706 !important; /* Laranja Acessível */
+        
+        display: flex !important;
+        align-items: center !important; /* Centraliza verticalmente */
+        justify-content: center !important;
+        
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
 
+    /* LINKS (Mantidos limpos e alinhados) */
+    #menuAcessibilidade a {
+        color: #FFFFFF !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 11px !important;
+        font-weight: bold !important;
+        text-transform: uppercase;
+        text-decoration: none !important;
+        
+        margin-left: 15px !important;
+        padding: 0 !important;
+        position: static !important;
+        line-height: normal !important;
+    }
+
+    /* Remove margem do primeiro item para simetria perfeita */
+    #menuAcessibilidade a:first-child {
+        margin-left: 0 !important;
+    }
+
+    /* Interação */
+    #menuAcessibilidade a:hover {
+        text-decoration: underline !important;
+        color: #fffbeb !important;
+    }
+
+    /* --- 2. NOVO MODAL DE TUTORIAL (Aviso de Segurança) --- */
+    
+    #modalAvisoOverlay {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(3px);
+        z-index: 10000;
+        justify-content: center; align-items: center;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-box-aviso {
+        background: white;
+        width: 90%; max-width: 550px;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        text-align: left; /* Texto alinhado à esquerda para leitura */
+        position: relative;
+        border-left: 8px solid #f59e0b; /* Amarelo/Laranja de Alerta */
+        animation: slideUp 0.3s ease;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .modal-header {
+        display: flex; align-items: center; margin-bottom: 15px;
+        color: #b45309; font-size: 20px; font-weight: bold;
+    }
+    .modal-icon { font-size: 24px; margin-right: 10px; }
+
+    .modal-content p {
+        color: #4b5563; font-size: 14px; line-height: 1.6; margin-bottom: 15px;
+    }
+
+    /* Caixa de instruções (Passo a Passo) */
+    .tutorial-box {
+        background-color: #fffbeb; /* Fundo amarelo bem claro */
+        border: 1px solid #fcd34d;
+        border-radius: 6px;
+        padding: 15px;
+        margin: 15px 0;
+        font-size: 13px;
+        color: #78350f;
+    }
+    .tutorial-box strong { display: block; margin-bottom: 5px; color: #92400e; }
+
+    /* Botões */
+    .modal-actions {
+        display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;
+    }
+    
+    .btn-cancelar {
+        background: white; border: 1px solid #ccc; color: #555;
+        padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 600;
+    }
+    .btn-cancelar:hover { background: #f3f4f6; }
+
+    .btn-prosseguir {
+        background-color: #d97706; color: white; border: none;
+        padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: 600;
+        display: flex; align-items: center;
+    }
+    .btn-prosseguir:hover { background-color: #b45309; }
+    .btn-prosseguir::after { content: "→"; margin-left: 8px; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+</style>
 
     
 </head>
 <body onselectstart="return true;">
+    <div id="modalAvisoOverlay">
+    <div class="modal-box-aviso">
+        <div class="modal-header">
+            <span class="modal-icon">⚠️</span>
+            Aviso de Conexão Externa
+        </div>
+        
+        <div class="modal-content">
+            <p>O documento que você está tentando acessar está hospedado em um servidor antigo do governo (HTTP) que não possui os certificados de segurança modernos.</p>
+            
+             <div class="tutorial-box">
+                <strong>Como acessar se aparecer a tela "Sua conexão não é particular":</strong>
+                
+                <div style="margin-top: 10px; margin-bottom: 10px; line-height: 1.8;">
+                    1. Na tela de erro do navegador, clique no botão <b>"Avançado"</b>.<br>
+                    2. Em seguida, clique no link <b>"Ir para www.nfe... (não seguro)"</b>.<br>
+                    3. Se possível, utilize o <b>Google Chrome</b> para melhor compatibilidade.
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #fcd34d; margin-bottom: 10px;">
+                
+                <i>Isso é apenas um alerta técnico, o arquivo oficial é seguro para leitura.</i>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button onclick="fecharModalAviso()" class="btn-cancelar">Cancelar</button>
+            <button id="btnConfirmarAcesso" class="btn-prosseguir">Entendi, Abrir Link</button>
+        </div>
+    </div>
+</div>
     <div id="barra-brasil" style="background: #7F7F7F; height: 20px; padding: 0 0 0 10px; display: block;">
         <ul id="menu-barra-temp" style="list-style: none;">
             <li style="display: inline; float: left; padding-right: 10px; margin-right: 10px; border-right: 1px solid #EDEDED">
@@ -288,6 +438,51 @@ Sys.Application.add_init(function() {
 </script>
 </form>
     </div>
+<script>
+    let linkDestinoAtual = ""; // Variável para guardar o link clicado
+
+    // Função para abrir o modal e salvar o link
+    function interceptarLink(e) {
+        e.preventDefault(); // Não abre o link ainda
+        
+        // Pega o endereço do link clicado (href)
+        linkDestinoAtual = e.currentTarget.getAttribute('href');
+        
+        // Mostra o aviso com o tutorial
+        document.getElementById('modalAvisoOverlay').style.display = 'flex';
+    }
+
+    // Função para fechar sem fazer nada
+    function fecharModalAviso() {
+        document.getElementById('modalAvisoOverlay').style.display = 'none';
+        linkDestinoAtual = "";
+    }
+
+    // Função quando o usuário clica em "Entendi, Abrir Link"
+    document.getElementById('btnConfirmarAcesso').addEventListener('click', function() {
+        if (linkDestinoAtual) {
+            // Abre o link em uma nova aba (target blank) para o usuário não perder o tutorial
+            window.open(linkDestinoAtual, '_blank'); 
+            fecharModalAviso();
+        }
+    });
+
+    // Fechar clicando fora
+    document.getElementById('modalAvisoOverlay').addEventListener('click', function(e) {
+        if (e.target === this) fecharModalAviso();
+    });
+
+    // APLICAR A LÓGICA NOS LINKS DA TABELA
+    document.addEventListener("DOMContentLoaded", function() {
+        // Seleciona os links da tabela de conteúdo
+        const linksDocumentos = document.querySelectorAll('#conteudoDinamico a');
+        
+        linksDocumentos.forEach(link => {
+            link.addEventListener('click', interceptarLink);
+            link.style.cursor = "pointer";
+        });
+    });
+</script>
 </body>
 
 </html>

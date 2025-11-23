@@ -36,6 +36,142 @@
     
     <!-- Captcha -->
     <script src="../../hcaptcha.com/1/api96ac.js?recaptchacompat=off&amp;hl=pt-BR" async defer type="text/javascript"></script>
+<style>
+    #menuAcessibilidade {
+        /* 1. POSICIONAMENTO (A chave para liberar a logo) */
+        float: right !important; /* Joga a barra para a direita */
+        width: auto !important;  /* A barra encolhe para caber o texto */
+        position: relative !important; /* Garante que o z-index funcione */
+        top: 0 !important;
+        left: auto !important;
+        margin: 0 !important;
+        
+        /* 2. SIMETRIA (O perfeccionismo visual) */
+        padding: 0 20px !important; /* 20px de borda exata em cada lado */
+        
+        /* 3. VISUAL E ALINHAMENTO */
+        height: 28px !important;
+        background-color: #d97706 !important; /* Laranja Acessível */
+        
+        display: flex !important;
+        align-items: center !important; /* Centraliza verticalmente */
+        justify-content: center !important;
+        
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
+
+    /* LINKS (Mantidos limpos e alinhados) */
+    #menuAcessibilidade a {
+        color: #FFFFFF !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 11px !important;
+        font-weight: bold !important;
+        text-transform: uppercase;
+        text-decoration: none !important;
+        
+        margin-left: 15px !important;
+        padding: 0 !important;
+        position: static !important;
+        line-height: normal !important;
+    }
+
+    /* Remove margem do primeiro item para simetria perfeita */
+    #menuAcessibilidade a:first-child {
+        margin-left: 0 !important;
+    }
+
+    /* Interação */
+    #menuAcessibilidade a:hover {
+        text-decoration: underline !important;
+        color: #fffbeb !important;
+    }
+    
+    /* Correção para o container pai não colapsar (Clearfix) */
+    #cabecalho::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    /* --- 3. CORES E VALIDAÇÃO DO CNPJ (Ajustado) --- */
+    
+    /* Input Padrão */
+    #ctl00_ContentPlaceHolder1_txtCNPJInutilizacao {
+        padding: 8px 10px;
+        border: 2px solid #ccc; /* Cinza inicial */
+        border-radius: 4px;
+        font-size: 14px;
+        width: 220px;
+        outline: none;
+        transition: all 0.3s ease;
+        color: #333;
+    }
+
+    /* Estado VERDE (Sucesso) */
+    .cnpj-valido {
+        border-color: #10b981 !important; /* Verde Borda */
+        background-color: #ecfdf5 !important; /* Verde Fundo Claro */
+        color: #065f46 !important; /* Texto Verde Escuro */
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Estado VERMELHO (Erro) */
+    .cnpj-invalido {
+        border-color: #ef4444 !important; /* Vermelho Borda */
+        background-color: #fef2f2 !important; /* Vermelho Fundo Claro */
+        color: #991b1b !important; /* Texto Vermelho Escuro */
+        animation: shake 0.3s ease-in-out; /* Tremidinha de erro */
+    }
+
+    /* Mensagens de Texto */
+    #feedbackCNPJ {
+        display: block;
+        margin-top: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    .msg-sucesso { color: #10b981; }
+    .msg-erro { color: #ef4444; }
+    .msg-neutra { color: #6b7280; }
+
+    /* --- 4. CORES DO BOTÃO (O Laranja que faltava) --- */
+    
+    /* Botão Habilitado (Laranja Oficial) */
+    .botao {
+        background-color: #d97706 !important; /* Laranja do Site */
+        color: white !important;
+        border: none !important;
+        padding: 8px 20px !important;
+        font-weight: bold !important;
+        border-radius: 4px !important;
+        cursor: pointer !important;
+        transition: background-color 0.2s;
+    }
+    .botao:hover {
+        background-color: #b45309 !important; /* Laranja mais escuro no hover */
+    }
+
+    /* Botão Desabilitado (Cinza) */
+    .botao-bloqueado {
+        background-color: #9ca3af !important; /* Cinza Morto */
+        color: #f3f4f6 !important;
+        cursor: not-allowed !important;
+        opacity: 0.8;
+        pointer-events: none; /* Impede clique */
+    }
+
+    /* Animação de erro (Tremida) */
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-4px); }
+        50% { transform: translateX(4px); }
+        75% { transform: translateX(-4px); }
+        100% { transform: translateX(0); }
+    }
+</style>
+s
 </head>
 <body onselectstart="return true;">
     <div id="barra-brasil" style="background: #7F7F7F; height: 20px; padding: 0 0 0 10px; display: block;">
@@ -418,6 +554,77 @@ document.getElementById('ctl00_ContentPlaceHolder1_revCNPJInutilizacao').dispose
 </script>
 </form>
     </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Identificar os elementos
+        const campoCnpj = document.getElementById('ctl00_ContentPlaceHolder1_txtCNPJInutilizacao');
+        const botaoConsultar = document.getElementById('ctl00_ContentPlaceHolder1_btnConsultar');
+        
+        // Criar elemento de feedback visual (Texto abaixo do input)
+        const feedbackMsg = document.createElement('span');
+        feedbackMsg.id = "feedbackCNPJ";
+        feedbackMsg.className = "msg-neutra";
+        feedbackMsg.innerHTML = "Digite apenas números (14 dígitos)";
+        
+        // Inserir o feedback logo após o campo de input
+        campoCnpj.parentNode.insertBefore(feedbackMsg, campoCnpj.nextSibling);
+
+        // Estado inicial do botão: Bloqueado (Prevenção de Erro Proativa)
+        botaoConsultar.disabled = true;
+        botaoConsultar.classList.add('botao-bloqueado');
+
+        // 2. Função de Validação e Máscara
+        campoCnpj.addEventListener('input', function(e) {
+            let valor = e.target.value;
+
+            // A. Restrição de Entrada: Remove qualquer caractere que NÃO seja número
+            // Isso atende à heurística de "Prevenção de Erros" impedindo letras
+            valor = valor.replace(/\D/g, ''); 
+
+            // B. Máscara Automática (Melhora a leitura - Chunking)
+            if (valor.length > 14) valor = valor.slice(0, 14); // Limita a 14 dígitos
+            
+            // Aplica formatação visual 00.000.000/0000-00 apenas para exibição
+            // Nota: Para este protótipo, vamos manter simples ou usar a lógica visual abaixo
+            // Se preferir ver a máscara no input:
+            let valorMascarado = valor;
+            if (valor.length > 2) valorMascarado = valor.replace(/^(\d{2})(\d)/, '$1.$2');
+            if (valor.length > 5) valorMascarado = valorMascarado.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+            if (valor.length > 8) valorMascarado = valorMascarado.replace(/\.(\d{3})(\d)/, '.$1/$2');
+            if (valor.length > 12) valorMascarado = valorMascarado.replace(/(\d{4})(\d)/, '$1-$2');
+            
+            // Atualiza o valor no campo
+            // (Nota: O input original tem maxlength=14, talvez precise aumentar para 18 se usar máscara visual)
+            e.target.value = valor; 
+
+            // C. Validação em Tempo Real
+            if (valor.length < 14) {
+                // Estado: Incompleto / Inválido
+                campoCnpj.classList.remove('cnpj-valido');
+                campoCnpj.classList.add('cnpj-invalido');
+                
+                let faltam = 14 - valor.length;
+                feedbackMsg.innerHTML = `Completando... faltam <b>${faltam}</b> dígitos.`;
+                feedbackMsg.className = "msg-erro";
+                
+                // Bloqueia o botão
+                botaoConsultar.disabled = true;
+                botaoConsultar.classList.add('botao-bloqueado');
+            } else {
+                // Estado: Completo (Sucesso simulado)
+                campoCnpj.classList.remove('cnpj-invalido');
+                campoCnpj.classList.add('cnpj-valido');
+                
+                feedbackMsg.innerHTML = "✓ CNPJ válido! Pronto para consultar.";
+                feedbackMsg.className = "msg-sucesso";
+                
+                // Libera o botão
+                botaoConsultar.disabled = false;
+                botaoConsultar.classList.remove('botao-bloqueado');
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

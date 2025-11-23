@@ -30,7 +30,120 @@
     });
     </script>
 
+<style>
+    /* ESTILO DA LISTA DE CONVÊNIOS (PROBLEMA 5) */
+    
+    .lista-convenios {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+    }
 
+    .card-convenio {
+        background: white;
+        border: 1px solid #ddd;
+        border-left: 5px solid #d97706; /* Laranja identidade */
+        padding: 15px;
+        text-decoration: none; /* Remove o sublinhado feio */
+        color: #333;
+        border-radius: 4px;
+        transition: all 0.2s;
+    }
+
+    .card-convenio:hover {
+        background-color: #fffaf0; /* Fundo clarinho no mouseover */
+        transform: translateX(5px); /* Move levemente para direita */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        align-items: center;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #b45309; /* Título Laranja Escuro */
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card-date {
+        font-size: 12px;
+        background: #eee;
+        padding: 3px 8px;
+        border-radius: 10px;
+        color: #666;
+    }
+
+    .card-desc {
+        font-size: 13px;
+        line-height: 1.4;
+        color: #555;
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+    }
+        #menuAcessibilidade {
+        /* 1. POSICIONAMENTO (A chave para liberar a logo) */
+        float: right !important; /* Joga a barra para a direita */
+        width: auto !important;  /* A barra encolhe para caber o texto */
+        position: relative !important; /* Garante que o z-index funcione */
+        top: 0 !important;
+        left: auto !important;
+        margin: 0 !important;
+        
+        /* 2. SIMETRIA (O perfeccionismo visual) */
+        padding: 0 20px !important; /* 20px de borda exata em cada lado */
+        
+        /* 3. VISUAL E ALINHAMENTO */
+        height: 28px !important;
+        background-color: #d97706 !important; /* Laranja Acessível */
+        
+        display: flex !important;
+        align-items: center !important; /* Centraliza verticalmente */
+        justify-content: center !important;
+        
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
+
+    /* LINKS (Mantidos limpos e alinhados) */
+    #menuAcessibilidade a {
+        color: #FFFFFF !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 11px !important;
+        font-weight: bold !important;
+        text-transform: uppercase;
+        text-decoration: none !important;
+        
+        margin-left: 15px !important;
+        padding: 0 !important;
+        position: static !important;
+        line-height: normal !important;
+    }
+
+    /* Remove margem do primeiro item para simetria perfeita */
+    #menuAcessibilidade a:first-child {
+        margin-left: 0 !important;
+    }
+
+    /* Interação */
+    #menuAcessibilidade a:hover {
+        text-decoration: underline !important;
+        color: #fffbeb !important;
+    }
+    
+    /* Correção para o container pai não colapsar (Clearfix) */
+    #cabecalho::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
 
     
 </head>
@@ -236,9 +349,55 @@ Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager', 'aspnetForm',
                             onmouseout="javascript: trocarImagem(this)" alt="Link que permite aumentar o tamanho da fonte" />
                     </div>
                     <div id="conteudoDinamico">
-                        
+                        <h2 style="color: #d97706; border-bottom: 1px solid #ccc; padding-bottom: 10px; font-family: 'Segoe UI', sans-serif;">
+        Convênios ICMS
+    </h2>
 
-    <?xml version="1.0" encoding="utf-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /></head><body><div class="divTituloPrincipal" xmlns=""><label class="tituloPrincipal">Convênios</label></div><div class="indentacaoConteudo" xmlns=""><p><a target="_blank" href="https://www.confaz.fazenda.gov.br/legislacao/convenios/2009/cv096_09"><span class="tituloConteudo">Convênio ICMS 96/09</span></a><br />De 11/12/2009, dispõe sobre fabricação, distribuição e aquisição de papéis com dispositivos de segurança para a impressão de documentos fiscais e documentos auxiliares da NF-e.</p><p><a target="_blank" href="https://www.confaz.fazenda.gov.br/legislacao/convenios/2009/cv091_09"><span class="tituloConteudo">Convênio ICMS 91/09</span></a><br />De 25/09/2009, altera o Convênio ICMS 110, que dispõe sobre o Formulário de Segurança para Impressão de Documentos Auxiliares de Documentos Fiscais Eletrônicos (NF-e e CT-e), aperfeiçoando as regras para emissão da Autorização de Aquisição de Formulário de Segurança para Documentos Auxiliares de Documentos Fiscais Eletrônicos - AAFS-DA.</p><p><a target="_blank" href="https://www.confaz.fazenda.gov.br/legislacao/convenios/2008/cv149_08"><span class="tituloConteudo">Convênio ICMS 149/08</span></a><br />De 05/12/2008, altera o <a href="https://www.confaz.fazenda.gov.br/legislacao/convenios/convenio-icms/2008/cv110_08" target="_blank">Convênio ICMS 110/08</a>, que dispões sobre o Formulário de Segurança para Impressão de Documentos Auxiliares de Documentos Fiscais Eletrônicos (NF-e e CT-e).</p><p><a target="_blank" href="https://www.confaz.fazenda.gov.br/legislacao/convenios/2008/cv110_08"><span class="tituloConteudo">Convênio ICMS 110/08</span></a><br />De&nbsp;26/09/2008, cria a figura do Formulário de Segurança para Impressão de Documentos Auxiliares de Documentos Fiscais Eletrônicos (NF-e e CT-e), visando disponibilizar uma alternativa ao tradicional Formulário de Segurança, permitindo o aumento da capacidade de produção e distribuição dos referidos documentos.</p></div></body>
+    <div class="lista-convenios">
+
+        <a href="https://www.confaz.fazenda.gov.br/legislacao/convenios/2009/cv096_09" target="_blank" class="card-convenio">
+            <div class="card-header">
+                <span class="card-title">Convênio ICMS 96/09</span>
+                <span class="card-date">11/12/2009</span>
+            </div>
+            <p class="card-desc">
+                Dispõe sobre fabricação, distribuição e aquisição de papéis com dispositivos de segurança para a impressão de documentos fiscais e documentos auxiliares da NF-e.
+            </p>
+        </a>
+
+        <a href="https://www.confaz.fazenda.gov.br/legislacao/convenios/2009/cv091_09" target="_blank" class="card-convenio">
+            <div class="card-header">
+                <span class="card-title">Convênio ICMS 91/09</span>
+                <span class="card-date">25/09/2009</span>
+            </div>
+            <p class="card-desc">
+                Altera o Convênio ICMS 110, aperfeiçoando as regras para emissão da Autorização de Aquisição de Formulário de Segurança para Documentos Auxiliares (AAFS-DA).
+            </p>
+        </a>
+
+        <a href="https://www.confaz.fazenda.gov.br/legislacao/convenios/2008/cv149_08" target="_blank" class="card-convenio">
+            <div class="card-header">
+                <span class="card-title">Convênio ICMS 149/08</span>
+                <span class="card-date">05/12/2008</span>
+            </div>
+            <p class="card-desc">
+                Altera o Convênio ICMS 110/08, que dispõe sobre o Formulário de Segurança para Impressão de Documentos Auxiliares de Documentos Fiscais Eletrônicos (NF-e e CT-e).
+            </p>
+        </a>
+
+        <a href="https://www.confaz.fazenda.gov.br/legislacao/convenios/2008/cv110_08" target="_blank" class="card-convenio">
+            <div class="card-header">
+                <span class="card-title">Convênio ICMS 110/08</span>
+                <span class="card-date">26/09/2008</span>
+            </div>
+            <p class="card-desc">
+                Cria a figura do Formulário de Segurança para Impressão de Documentos Auxiliares (NF-e e CT-e), visando disponibilizar uma alternativa ao formulário tradicional.
+            </p>
+        </a>
+
+    </div>
+
+    </body>
 <!-- Mirrored from www.nfe.fazenda.gov.br/portal/listaConteudo.aspx?tipoConteudo=QIcipqxg0bU= by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 22 Nov 2025 19:23:06 GMT -->
 </html>
 

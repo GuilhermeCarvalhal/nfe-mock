@@ -31,7 +31,202 @@
     </script>
 
 
+<style>
+    #menuAcessibilidade {
+        /* 1. POSICIONAMENTO (A chave para liberar a logo) */
+        float: right !important; /* Joga a barra para a direita */
+        width: auto !important;  /* A barra encolhe para caber o texto */
+        position: relative !important; /* Garante que o z-index funcione */
+        top: 0 !important;
+        left: auto !important;
+        margin: 0 !important;
+        
+        /* 2. SIMETRIA (O perfeccionismo visual) */
+        padding: 0 20px !important; /* 20px de borda exata em cada lado */
+        
+        /* 3. VISUAL E ALINHAMENTO */
+        height: 28px !important;
+        background-color: #d97706 !important; /* Laranja Acessível */
+        
+        display: flex !important;
+        align-items: center !important; /* Centraliza verticalmente */
+        justify-content: center !important;
+        
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
 
+    /* LINKS (Mantidos limpos e alinhados) */
+    #menuAcessibilidade a {
+        color: #FFFFFF !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 11px !important;
+        font-weight: bold !important;
+        text-transform: uppercase;
+        text-decoration: none !important;
+        
+        margin-left: 15px !important;
+        padding: 0 !important;
+        position: static !important;
+        line-height: normal !important;
+    }
+
+    /* Remove margem do primeiro item para simetria perfeita */
+    #menuAcessibilidade a:first-child {
+        margin-left: 0 !important;
+    }
+
+    /* Interação */
+    #menuAcessibilidade a:hover {
+        text-decoration: underline !important;
+        color: #fffbeb !important;
+    }
+    
+    /* Correção para o container pai não colapsar (Clearfix) */
+    #cabecalho::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    /* ================================================================= */
+    /* PROTÓTIPO: CSS DO PROBLEMA 4 (MODAL DE CERTIFICADOS) */
+    /* ================================================================= */
+    
+    /* Fundo Escuro */
+    #modalCertOverlay {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px);
+        z-index: 10000; justify-content: center; align-items: center;
+        animation: fadeIn 0.2s ease-out;
+    }
+
+    /* Janela do Modal */
+    .modal-cert-box {
+        background: #fff; width: 700px; max-width: 95%;
+        border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        overflow: hidden; display: flex; flex-direction: column;
+        animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        font-family: 'Segoe UI', sans-serif;
+        text-align: left; /* Garante alinhamento à esquerda */
+    }
+
+    /* Cabeçalho */
+    .cert-header {
+        background: #1f2937; color: white; padding: 20px;
+        border-bottom: 4px solid #d97706; /* Identidade Laranja */
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .cert-header h2 { margin: 0; font-size: 18px; font-weight: 600; color: white; }
+
+    /* Corpo */
+    .cert-body { padding: 25px; }
+
+    /* Instrução Azul (Ajuda) */
+    .cert-instruction {
+        background-color: #eff6ff; border-left: 4px solid #3b82f6;
+        padding: 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0;
+        color: #1e3a8a; font-size: 14px; line-height: 1.5;
+    }
+
+    /* Tabela */
+    .cert-table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid #e5e7eb; }
+    .cert-table th {
+        background-color: #f3f4f6; color: #374151; text-align: left;
+        padding: 12px; font-weight: 600; border-bottom: 2px solid #d1d5db;
+    }
+    .cert-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; color: #4b5563; cursor: pointer; }
+    
+    .cert-row:hover { background-color: #f9fafb; }
+    .cert-row.selected {
+        background-color: #fff7ed !important; /* Fundo Laranja Claro */
+        border-left: 4px solid #d97706;
+    }
+    .cert-row.selected td { color: #9a4505; font-weight: 600; }
+
+    /* Tooltip (?) */
+    .tooltip-icon {
+        display: inline-block; width: 16px; height: 16px; background: #9ca3af;
+        color: white; border-radius: 50%; text-align: center; line-height: 16px;
+        font-size: 11px; margin-left: 5px; cursor: help; position: relative;
+    }
+    .tooltip-icon:hover::after {
+        content: "Verifique se este número coincide com seu token físico.";
+        position: absolute; bottom: 25px; left: -80px; width: 180px;
+        background: #333; color: #fff; padding: 8px; border-radius: 4px;
+        font-size: 11px; font-weight: normal; z-index: 100;
+    }
+
+    /* Rodapé */
+    .cert-footer {
+        padding: 15px 25px; background: #f9fafb; border-top: 1px solid #e5e7eb;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .feedback-msg { font-size: 13px; color: #059669; font-weight: 600; opacity: 0; transition: opacity 0.3s; }
+    
+    .btn { padding: 10px 20px; border-radius: 4px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; }
+    .btn-cancel { background: white; border: 1px solid #d1d5db; color: #374151; }
+    .btn-confirm { background: #d97706; color: white; }
+    .btn-confirm:hover { background: #b45309; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* ================================================================= */
+    /* ESTILO DOS CARDS DE SERVIÇOS (Substitui a lista antiga) */
+    /* ================================================================= */
+    .services-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Espaço entre os cards */
+        margin-top: 20px;
+    }
+
+    .service-card {
+        flex: 1 1 calc(50% - 20px); /* Ocupa 50% da tela menos o gap */
+        min-width: 300px;
+        background-color: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #374151;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* Efeito Hover (Feedback visual) */
+    .service-card:hover {
+        transform: translateY(-3px); /* Sobe um pouquinho */
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: #d97706; /* Borda laranja ao passar o mouse */
+    }
+
+    .service-icon {
+        width: 48px;
+        height: 48px;
+        margin-right: 15px;
+        opacity: 0.8;
+    }
+
+    .service-info strong {
+        display: block;
+        font-size: 16px;
+        color: #111827;
+        margin-bottom: 4px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .service-info span {
+        font-size: 13px;
+        color: #6b7280;
+        font-family: 'Segoe UI', sans-serif;
+        line-height: 1.4;
+        display: block;
+    }
+</style>
     
     </head>
 <body onselectstart="return true;">
@@ -220,6 +415,17 @@ Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager', 'aspnetForm',
                     </div>
                 </div>
                 <div id="conteudo">
+                    <div style="background: #fff; padding: 20px; margin-bottom: 20px; border: 1px solid #eee; border-radius: 5px;">
+                        <h3 style="color: #d97706; font-family: sans-serif; margin-bottom: 15px;">Serviços em Destaque (Protótipo)</h3>
+                        
+                        <a href="#" id="linkManifestacao" style="display: flex; align-items: center; padding: 15px; background: white; border: 1px solid #ccc; text-decoration: none; color: #333; width: 300px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 4px;">
+                            <img src="https://www.nfe.fazenda.gov.br/portal/imagens/ico_manifestacao_Off.png" style="margin-right: 15px;">
+                            <div style="font-family: sans-serif;">
+                                <strong style="display: block; font-size: 14px;">Manifestação Destinatário</strong>
+                                <span style="font-size: 11px; color: #666;">Confirmar operações</span>
+                            </div>
+                        </a>
+                    </div>
                     <div id="localizacao">
                         <div id="voceEstaAqui">
                             Você está aqui:
@@ -255,6 +461,7 @@ Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager', 'aspnetForm',
     <span id="ctl00_ContentPlaceHolder1_spanServicos" class="tituloPrincipal">Serviços mais Acessados</span>
 
     <div id="divServicosMaisAcessados">
+        
         <?xml version="1.0" encoding="utf-8"?><div class="servicosDestaqueEsquerda" xmlns:chave="http://exslt.org/chaveacesso"><img height="50" onmouseover="javascript: trocarImagem(this)" onmouseout="javascript: trocarImagem(this)" src="imagens/pesquisar_NFe_Off_icone.png"></img><a href="consultaRecaptcha8ad3.html?tipoConsulta=resumo&amp;tipoConteudo=7PhJ+gAVw2g=">Consultar NF-e</a></div><div class="servicosDestaqueDireita" xmlns:chave="http://exslt.org/chaveacesso"><img height="50" onmouseover="javascript: trocarImagem(this)" onmouseout="javascript: trocarImagem(this)" src="imagens/consultar_inutil_Off.png"></img><a href="consulta0f5f.html?tipoConsulta=inutilizacao&amp;tipoConteudo=nDmpH/MjKrg=">Consultar Inutilização</a></div><div class="servicosDestaqueEsquerda" xmlns:chave="http://exslt.org/chaveacesso"><img height="50" onmouseover="javascript: trocarImagem(this)" onmouseout="javascript: trocarImagem(this)" src="imagens/disponibilidade_Off_icones.png"></img><a href="disponibilidadefd3a.html?versao=0.00&amp;tipoConteudo=P2c98tUpxrI=">Consultar Disponibilidade</a></div><div class="servicosDestaqueDireita" xmlns:chave="http://exslt.org/chaveacesso"><img height="50" onmouseover="javascript: trocarImagem(this)" onmouseout="javascript: trocarImagem(this)" src="imagens/ico_manifestacao_Off.png"></img><a href="manifestacaoDestinatario58ea.html?tipoConteudo=o9MkXc+hmKs=">Manifestação Destinatário</a></div>
     </div>
     <span class="tituloPrincipal" id="spanAvisos">Avisos</span>
@@ -414,6 +621,108 @@ Sys.Application.add_init(function() {
 </script>
 </form>
     </div>
+
+<div id="modalCertOverlay">
+        <div class="modal-cert-box">
+            <div class="cert-header">
+                <h2>🔐 SELECIONAR CERTIFICADO DIGITAL</h2>
+                <span style="cursor:pointer; opacity:0.7; font-size: 20px;" onclick="fecharModalCert()">✕</span>
+            </div>
+            
+            <div class="cert-body">
+                <div class="cert-instruction">
+                    <strong>Qual certificado escolher?</strong><br>
+                    Selecione o certificado correspondente à sua empresa. Caso tenha renovado recentemente, utilize o que possui a <b>Data de Validade</b> mais distante (última linha).
+                </div>
+
+                <table class="cert-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">Titular / Empresa</th>
+                            <th style="width: 30%">Emissor</th>
+                            <th style="width: 30%">
+                                N. Série 
+                                <span class="tooltip-icon" title="">?</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="certListBody">
+                        <tr class="cert-row" onclick="selecionarCert(this, 'COMERCIAL SILVA LTDA - Antigo')">
+                            <td>COMERCIAL SILVA LTDA</td>
+                            <td>AC SOLUTI v5</td>
+                            <td>58b8c384-9ecb-48ec</td>
+                        </tr>
+                        <tr class="cert-row" onclick="selecionarCert(this, 'COMERCIAL SILVA LTDA - Expirado')">
+                            <td>COMERCIAL SILVA LTDA (Exp)</td>
+                            <td>AC CERTISIGN G7</td>
+                            <td>99d0ee52-70b4-4c77</td>
+                        </tr>
+                        <tr class="cert-row selected" onclick="selecionarCert(this, 'COMERCIAL SILVA LTDA - 2025')">
+                            <td>COMERCIAL SILVA LTDA <strong>(Válido 2025)</strong></td>
+                            <td>AC SERASA RFB v5</td>
+                            <td>00C13FB4F9E177F8</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cert-footer">
+                <span id="feedbackMsgCert" class="feedback-msg">✓ Certificado Válido Selecionado</span>
+                <div>
+                    <button class="btn btn-cancel" onclick="fecharModalCert()">Cancelar</button>
+                    <button class="btn btn-confirm" onclick="confirmarCert()">Confirmar Acesso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos
+        const modalOverlayCert = document.getElementById('modalCertOverlay');
+        const feedbackMsgCert = document.getElementById('feedbackMsgCert');
+        let certificadoAtual = "COMERCIAL SILVA LTDA - 2025"; // Padrão pré-selecionado
+
+        // 1. Interceptação do Link
+        // Se certifique que o ID do link na Etapa 2 é 'linkManifestacao'
+        const linkTrigger = document.getElementById('linkManifestacao');
+        
+        if(linkTrigger) {
+            linkTrigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                modalOverlayCert.style.display = 'flex';
+                feedbackMsgCert.style.opacity = '1';
+            });
+        }
+
+        // 2. Lógica de Seleção
+        function selecionarCert(row, nomeCert) {
+            document.querySelectorAll('.cert-row').forEach(r => r.classList.remove('selected'));
+            row.classList.add('selected');
+            certificadoAtual = nomeCert;
+            
+            feedbackMsgCert.innerHTML = "✓ Selecionado: " + nomeCert;
+            feedbackMsgCert.style.opacity = '1';
+            feedbackMsgCert.style.color = "#059669";
+        }
+
+        // 3. Fechar
+        function fecharModalCert() {
+            modalOverlayCert.style.display = 'none';
+        }
+
+        // 4. Confirmar
+        function confirmarCert() {
+            if(certificadoAtual) {
+                alert("Autenticação realizada com sucesso usando:\n" + certificadoAtual);
+                fecharModalCert();
+            }
+        }
+
+        // Fechar ao clicar fora
+        modalOverlayCert.addEventListener('click', function(e) {
+            if (e.target === this) fecharModalCert();
+        });
+    </script>
 </body>
 
 
